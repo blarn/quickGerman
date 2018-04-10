@@ -1,0 +1,10 @@
+{
+	"name": "quickGerman",
+	"version": "1.0",
+	"description": "",
+	"permissions": ["contextMenus", "https://translate.yandex.net/"],
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"manifest_version": 2
+}
