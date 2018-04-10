@@ -6,5 +6,11 @@
 	"background": {
 		"scripts": ["background.js"]
 	},
+	"icons": {
+		"16": "images/eggy16.png",
+		"32": "images/eggy32.png",
+		"48": "images/eggy48.png",
+		"128": "images/eggy128.png"
+	},
 	"manifest_version": 2
 }
