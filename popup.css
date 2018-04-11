@@ -1,0 +1,71 @@
+body {
+	margin: 0;
+	min-width: 250px;
+}
+
+/* Include the padding and border in an element's total width and height */
+* {
+	box-sizing: border-box;
+}
+
+/* Style the close button */
+.close {
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+	background-color: #f44336;
+	color: white;
+}
+
+/* Style the header */
+.header {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	background-color: #ed5121;
+	color: white;
+}
+
+/* Clear floats after the header */
+.header:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+#vocab {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#vocab td, #vocab th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#vocab tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+#vocab tr:hover {
+	background-color: #ddd;
+}
+
+td:nth-child(3) {
+	text-align: center;
+}
+
+#vocab th {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	background-color: #ed5121; //#f9e938; //#a47c53;
+	color: white;
+}

@@ -6,6 +6,16 @@
 	"background": {
 		"scripts": ["background.js"]
 	},
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "images/eggy16.png",
+		"32": "images/eggy32.png",
+		"48": "images/eggy48.png",
+		"128": "images/eggy128.png"
+      },
+      "default_title": "quickGerman"
+    },
 	"icons": {
 		"16": "images/eggy16.png",
 		"32": "images/eggy32.png",

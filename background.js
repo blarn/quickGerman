@@ -1,3 +1,9 @@
+const MAX_LENGTH = 10
+
+chrome.runtime.onInstalled.addListener(function() {
+	chrome.storage.sync.set({list: [[],[]]}, function() {});
+});
+
 function onClick(info, tab) {
 	if(info.selectionText) {
 		console.log(info.selectionText + " was clicked")
@@ -18,13 +24,20 @@ function onClick(info, tab) {
 }
 
 function listAdd(info, tab) {
-	chrome.storage.local.get(['last_result'], function(result) {
-		console.log(result.last_result)
+	chrome.storage.local.get(["last_result", "list"], function(result) {
+		if(!result.list) result.list=[[],[]];
+		console.log("last result: "+result.last_result[0]+"="+result.last_result[1])
+		console.log("list: "+result.list)
+		if(result.list.length>MAX_LENGTH) result.list.shift();
+		result.list.push(result.last_result);
+		chrome.storage.local.set({list: result.list}, function(){
+			console.log("result pushed to list, list stored")
+		});
 	});
 }
 
 function newTab(info, tab) {
-	chrome.storage.local.get(['last_result'], function(result) {
+	chrome.storage.local.get([last_result], function(result) {
 		var text = result.last_result
 		var lang = "en-de"
 		chrome.tabs.create({ url: "https://translate.yandex.com/?text="+text+"&lang="+lang });
@@ -42,7 +55,9 @@ function translate(input, callback) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				var result = JSON.parse(xhr.responseText).text[0]
-				chrome.storage.local.set({last_result: result}, null);
+				chrome.storage.local.set({last_result: [input, result]}, function() {
+          			console.log('last result set to ' +  [input, result]);
+        		});
 				callback(result)
 			} else {
 				console.error(xhr.statusText);
@@ -57,7 +72,7 @@ function translate(input, callback) {
 
 var cm_main = chrome.contextMenus.create({
 	id: "cm_main", 
-	title: "neu Deutsch", 
+	title: "auf Deutsch", 
 	contexts:["selection"], 
 	onclick: onClick
 });
