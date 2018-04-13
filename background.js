@@ -1,7 +1,7 @@
 const MAX_LENGTH = 10
 
 chrome.runtime.onInstalled.addListener(function() {
-	chrome.storage.sync.set({list: [[],[]]}, function() {});
+	chrome.storage.sync.set({list: []}, function() {});
 });
 
 function onClick(info, tab) {
@@ -10,12 +10,12 @@ function onClick(info, tab) {
 		translate(info.selectionText, function(result) {
 			console.log(result);
 			chrome.contextMenus.update(child1, {
-				title: "\""+result+"\": add to list",
+				title: "add to list: \""+result+"\"",
 				contexts: ["all"],
 				onclick: listAdd
 			});
 			chrome.contextMenus.update(child2, {
-				title: "\""+result+"\": open in browser",
+				title: "open in browser: \""+result+"\"",
 				contexts: ["all"],
 				onclick: newTab
 			});
@@ -25,10 +25,10 @@ function onClick(info, tab) {
 
 function listAdd(info, tab) {
 	chrome.storage.local.get(["last_result", "list"], function(result) {
-		if(!result.list) result.list=[[],[]];
+		if(!result.list) result.list=[]; //TODO not sure about this, initializing to [] caused errors before but so did [[],[]]
 		console.log("last result: "+result.last_result[0]+"="+result.last_result[1])
 		console.log("list: "+result.list)
-		if(result.list.length>MAX_LENGTH) result.list.shift();
+		while((result.list.length>MAX_LENGTH)) result.list.shift();
 		result.list.push(result.last_result);
 		chrome.storage.local.set({list: result.list}, function(){
 			console.log("result pushed to list, list stored")

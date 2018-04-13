@@ -1,25 +1,29 @@
-chrome.storage.local.get(["list"], function(result) {
+chrome.storage.local.get(["list", "last_result"], function(result) {
 	var list = result.list;
-	console.log("in popup.js: list is "+result.list)
+	
+	addElem("th", "English", "German")
+	addElem("td", result.last_result[0], result.last_result[1])
+
 	var i;
 	for (i = list.length-1; i >= 0; i--) {
-
-		var tr = document.createElement("tr");
-		var td_en = document.createElement("td");
-		var td_de = document.createElement("td");
-		var t_en = document.createTextNode(list[i][0]);
-		var t_de = document.createTextNode(list[i][1]);
-		td_en.appendChild(t_en);
-		td_de.appendChild(t_de);
-		tr.appendChild(td_en);
-		tr.appendChild(td_de);
-		document.getElementById("vocab").appendChild(tr);
+		addElem("td", list[i][0], list[i][1])
 	}
 });
 
-chrome.storage.local.get(["last_result"], function(result) {
-	var en = result.last_result[0]
-	var de = result.last_result[1]
-	var a = document.createTextNode("\""+en+"\" translates to \""+de+"\"");
-	document.getElementById("header").appendChild(a);
-});
+function addElem(type, en, de)
+{
+	var tr = document.createElement("tr");
+	var th_en = document.createElement(type);
+	var t_en = document.createTextNode(en);
+	th_en.appendChild(t_en);
+	tr.appendChild(th_en);
+
+	if(de) {
+		var th_de = document.createElement(type);
+		var t_de = document.createTextNode(de);
+		th_de.appendChild(t_de);
+		tr.appendChild(th_de);
+	}
+	
+	document.getElementById("vocab").appendChild(tr);
+}
